@@ -48,7 +48,7 @@ private class DataClassType
 			superClass.fields.get().filter(c -> c.kind != null && !c.meta.has(':exclude'))
 		);
 
-		return classFields.map(f -> {
+		return classFields.map((f:haxe.macro.Type.ClassField) -> ({
 			access: f.isPublic ? [APublic, AFinal] : [AFinal],
 			doc: f.doc,
 			kind: switch f.kind {
@@ -66,7 +66,7 @@ private class DataClassType
 			meta: f.meta.get(),
 			name: f.name,
 			pos: f.pos
-		}).filter(f -> f.kind != null);
+		}:haxe.macro.Expr.Field)).filter(f -> f.kind != null).array();
 	}	
 }
 
